@@ -64,7 +64,7 @@ export default function Home({ username, setUsername, search }) {
 			</div>
 			<div className="select-none">
 				<img
-					src="/programmer.png"
+					src="../public/programmer.png"
 					alt="programmer"
 					className="mt-32 h-[606px] hidden xl:block"
 				/>
