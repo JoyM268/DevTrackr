@@ -2,6 +2,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Search from "./Search";
 import Button from "./Button";
+import Image from "../public/programmer.png";
 
 export default function Home({ username, setUsername, search }) {
 	useGSAP(() => {
@@ -64,7 +65,7 @@ export default function Home({ username, setUsername, search }) {
 			</div>
 			<div className="select-none">
 				<img
-					src="../public/programmer.png"
+					src={Image}
 					alt="programmer"
 					className="mt-32 h-[606px] hidden xl:block"
 				/>
