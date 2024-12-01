@@ -2,7 +2,7 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Search from "./Search";
 import Button from "./Button";
-import Image from "/programmer.png";
+import Image from "./programmer.png";
 
 export default function Home({ username, setUsername, search }) {
 	useGSAP(() => {
