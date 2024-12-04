@@ -2,17 +2,31 @@ import SectionOptions from "./SectionOptions";
 import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import RepositoryCard from "./RepositoryCard";
+import FollowCard from "./FollowCard";
 
 export default function Section({ username }) {
 	const [section, setSection] = useState("Repositories");
 	const [sectionInfo, setSectionInfo] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
 	function changeSection(e) {
 		setSection(e.target.innerText);
 		setSectionInfo(null);
 	}
+
+	useEffect(() => {
+		function handleResize() {
+			setViewportWidth(window.innerWidth);
+		}
+
+		window.addEventListener("resize", handleResize);
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
 
 	useEffect(() => {
 		const map = {
@@ -51,7 +65,7 @@ export default function Section({ username }) {
 	}, [section, username]);
 
 	return (
-		<div className="rounded-3xl bg-[#070F2B] m-5  text-white flex border border-[#b5d5ff] border-solid">
+		<div className="rounded-3xl bg-[#070F2B] m-5 text-white flex border border-[#b5d5ff] border-solid z-[100]">
 			<nav className="flex justify-evenly flex-col border-r border-[#b5d5ff] border-solid">
 				<SectionOptions
 					changeSection={changeSection}
@@ -94,26 +108,86 @@ export default function Section({ username }) {
 					</div>
 				)}
 
-				<SectionContent sectionInfo={sectionInfo} section={section} />
+				<SectionContent
+					sectionInfo={sectionInfo}
+					section={section}
+					viewportWidth={viewportWidth}
+				/>
 			</div>
 		</div>
 	);
 }
 
-function SectionContent({ sectionInfo, section }) {
+function SectionContent({ sectionInfo, section, viewportWidth }) {
 	return (
-		<div className="flex p-5 overflow-y-scroll overflow-x-hidden max-h-[384px] flex-wrap custom-scrollbar">
+		<div
+			className={`flex p-5 overflow-y-scroll max-h-[384px] sm:flex-wrap custom-scrollbar z-50 overflow-x-hidden flex-col sm:flex-row ${
+				sectionInfo === null || sectionInfo.length === 0
+					? "justify-center pt-40"
+					: ""
+			}`}
+		>
 			{section === "Repositories" &&
 				sectionInfo?.map((repoInfo) => (
 					<RepositoryCard repoInfo={repoInfo} key={repoInfo.id} />
 				))}
 
+			{section === "Repositories" &&
+				(sectionInfo === null || sectionInfo.length === 0) && (
+					<h1 className="text-center text-2xl font-bold text-wrap">
+						User Has No Public Repositories.
+					</h1>
+				)}
+
 			{section === "Followers" &&
 				sectionInfo?.map((followInfo) => (
-					<FollowCard followInfo={followInfo} key={followInfo.id} />
+					<FollowCard
+						followInfo={followInfo}
+						key={followInfo.id}
+						viewportWidth={viewportWidth}
+					/>
 				))}
+			{section === "Following" &&
+				sectionInfo?.map((followInfo) => (
+					<FollowCard
+						followInfo={followInfo}
+						key={followInfo.id}
+						viewportWidth={viewportWidth}
+					/>
+				))}
+
+			{section === "Followers" &&
+				(sectionInfo === null || sectionInfo.length === 0) && (
+					<h1 className="text-center text-2xl font-bold text-wrap">
+						User Has No Followers.
+					</h1>
+				)}
+
+			{section === "Following" &&
+				(sectionInfo === null || sectionInfo.length === 0) && (
+					<h1 className="text-center text-2xl font-bold text-wrap">
+						User Is Not Following Anyone.
+					</h1>
+				)}
+
+			{section === "Starred" &&
+				sectionInfo?.map((repoInfo) => (
+					<RepositoryCard repoInfo={repoInfo} key={repoInfo.id} />
+				))}
+
+			{section === "Starred" &&
+				(sectionInfo === null || sectionInfo.length === 0) && (
+					<h1 className="text-center text-2xl font-bold text-wrap">
+						User Has No Starred Repositories.
+					</h1>
+				)}
+
+			{section === "Gists" &&
+				(sectionInfo === null || sectionInfo.length === 0) && (
+					<h1 className="text-center text-2xl font-bold text-wrap">
+						User Has No Gists.
+					</h1>
+				)}
 		</div>
 	);
 }
-
-function FollowCard({ followInfo }) {}

@@ -32,45 +32,6 @@ export default function UserDetails({ username, back }) {
 		}
 
 		getData();
-		// setUserInfo({
-		// 	login: "JoyM268",
-		// 	id: 125041935,
-		// 	node_id: "U_kgDOB3P9Dw",
-		// 	avatar_url: "https://avatars.githubusercontent.com/u/125041935?v=4",
-		// 	gravatar_id: "",
-		// 	url: "https://api.github.com/users/JoyM268",
-		// 	html_url: "https://github.com/JoyM268",
-		// 	followers_url: "https://api.github.com/users/JoyM268/followers",
-		// 	following_url:
-		// 		"https://api.github.com/users/JoyM268/following{/other_user}",
-		// 	gists_url: "https://api.github.com/users/JoyM268/gists{/gist_id}",
-		// 	starred_url:
-		// 		"https://api.github.com/users/JoyM268/starred{/owner}{/repo}",
-		// 	subscriptions_url:
-		// 		"https://api.github.com/users/JoyM268/subscriptions",
-		// 	organizations_url: "https://api.github.com/users/JoyM268/orgs",
-		// 	repos_url: "https://api.github.com/users/JoyM268/repos",
-		// 	events_url: "https://api.github.com/users/JoyM268/events{/privacy}",
-		// 	received_events_url:
-		// 		"https://api.github.com/users/JoyM268/received_events",
-		// 	type: "User",
-		// 	user_view_type: "public",
-		// 	site_admin: false,
-		// 	name: "Joy Mascarenhas",
-		// 	company: null,
-		// 	blog: "",
-		// 	location: "Karnataka",
-		// 	email: null,
-		// 	hireable: null,
-		// 	bio: "3rd year CSE student at SDMCET.",
-		// 	twitter_username: null,
-		// 	public_repos: 18,
-		// 	public_gists: 0,
-		// 	followers: 33,
-		// 	following: 27,
-		// 	created_at: "2023-02-10T14:02:19Z",
-		// 	updated_at: "2024-10-23T02:17:37Z",
-		// });
 	}, [username]);
 
 	return (
@@ -135,14 +96,10 @@ export default function UserDetails({ username, back }) {
 										<FontAwesomeIcon icon={faUser} />
 										<h1>
 											{userInfo?.followers || 0}{" "}
-											<span className="hover:underline underline-offset-2 cursor-pointer transition-all duration-200">
-												{"Followers"}
-											</span>
+											<span>{"Followers"}</span>
 											{" . "}
 											{userInfo?.following || 0}{" "}
-											<span className="hover:underline underline-offset-2 cursor-pointer">
-												{"Following"}
-											</span>
+											<span>{"Following"}</span>
 										</h1>
 									</span>
 								</h1>

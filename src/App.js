@@ -7,7 +7,7 @@ import UserDetails from "./UserDetails";
 export default function App() {
 	const [menu, setMenu] = useState(false);
 	const [username, setUsername] = useState("");
-	const [current, setCurrent] = useState("UserDetails");
+	const [current, setCurrent] = useState("Home");
 
 	function changeCurrent(option) {
 		if (current !== option) {
