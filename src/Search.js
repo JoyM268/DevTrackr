@@ -3,7 +3,7 @@ import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 export default function Search({ username, setUsername, search }) {
 	return (
-		<div className="relative w-[400px] md:w-[600px] search">
+		<div className="relative w-[350px] md:w-[600px] search">
 			<form className="block relative" onSubmit={search}>
 				<input
 					type="text"

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import RepositoryCard from "./RepositoryCard";
 import FollowCard from "./FollowCard";
+import GistCard from "./GistCard";
 
 export default function Section({ username }) {
 	const [section, setSection] = useState("Repositories");
@@ -121,9 +122,9 @@ export default function Section({ username }) {
 function SectionContent({ sectionInfo, section, viewportWidth }) {
 	return (
 		<div
-			className={`flex p-5 overflow-y-scroll max-h-[384px] sm:flex-wrap custom-scrollbar z-50 overflow-x-hidden flex-col sm:flex-row ${
+			className={`flex p-2 sm:p-5 max-h-[384px] overflow-y-scroll sm:flex-wrap custom-scrollbar z-50 overflow-x-hidden flex-col sm:flex-row ${
 				sectionInfo === null || sectionInfo.length === 0
-					? "justify-center pt-40"
+					? "justify-center mt-40"
 					: ""
 			}`}
 		>
@@ -186,6 +187,18 @@ function SectionContent({ sectionInfo, section, viewportWidth }) {
 				(sectionInfo === null || sectionInfo.length === 0) && (
 					<h1 className="text-center text-2xl font-bold text-wrap">
 						User Has No Gists.
+					</h1>
+				)}
+
+			{section === "Gists" &&
+				sectionInfo?.map((gistInfo) => (
+					<GistCard gistInfo={gistInfo} key={gistInfo.id} />
+				))}
+
+			{section === "Events" &&
+				(sectionInfo === null || sectionInfo.length === 0) && (
+					<h1 className="text-center text-2xl font-bold text-wrap">
+						User Has No Events.
 					</h1>
 				)}
 		</div>

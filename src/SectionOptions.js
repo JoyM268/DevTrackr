@@ -9,7 +9,7 @@ export default function SectionOptions({
 }) {
 	return (
 		<h1
-			className={`h-16 cursor-pointer py-5 px-7 ${
+			className={`h-16 cursor-pointer py-5 px-2 text-center sm:py-5 sm:px-7 ${
 				tl === true ? "rounded-tl-3xl" : ""
 			} ${
 				bl === true ? "rounded-bl-3xl" : ""
