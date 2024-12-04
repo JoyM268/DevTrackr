@@ -4,6 +4,7 @@ import Loading from "./Loading";
 import RepositoryCard from "./RepositoryCard";
 import FollowCard from "./FollowCard";
 import GistCard from "./GistCard";
+import EventCard from "./EventCard";
 
 export default function Section({ username }) {
 	const [section, setSection] = useState("Repositories");
@@ -201,6 +202,11 @@ function SectionContent({ sectionInfo, section, viewportWidth }) {
 						User Has No Events.
 					</h1>
 				)}
+
+			{section === "Events" &&
+				sectionInfo?.map((eventInfo) => (
+					<EventCard eventInfo={eventInfo} key={eventInfo.id} />
+				))}
 		</div>
 	);
 }
