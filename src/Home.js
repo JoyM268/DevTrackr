@@ -48,7 +48,7 @@ export default function Home({ username, setUsername, search }) {
 					Welcome to DevTrackr
 				</h1>
 				<div className="flex flex-col gap-3 select-none description">
-					<p>Platform for exploring the GitHub Stats.</p>
+					<p>Platform for exploring GitHub Stats.</p>
 					<p className="text-justify select-none text-wrap hidden sm:block">
 						Whether you're looking for the most popular
 						repositories, influential developers, trending gists, or
