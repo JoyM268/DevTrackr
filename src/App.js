@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./Header";
 import SideMenu from "./SideMenu";
 import Home from "./Home";
 import UserDetails from "./UserDetails";
+import TopRepositories from "./TopRepositories";
 
 export default function App() {
 	const [menu, setMenu] = useState(false);
 	const [username, setUsername] = useState("");
 	const [current, setCurrent] = useState("Home");
+	const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
 	function changeCurrent(option) {
 		if (current !== option) {
@@ -32,6 +34,18 @@ export default function App() {
 		if (username !== "") setCurrent("UserDetails");
 	}
 
+	useEffect(() => {
+		function handleResize() {
+			setViewportWidth(window.innerWidth);
+		}
+
+		window.addEventListener("resize", handleResize);
+
+		return () => {
+			window.removeEventListener("resize", handleResize);
+		};
+	}, []);
+
 	return (
 		<>
 			<Header
@@ -55,18 +69,16 @@ export default function App() {
 			)}
 
 			{current === "UserDetails" && (
-				<UserDetails username={username} back={home} />
+				<UserDetails
+					username={username}
+					back={home}
+					viewportWidth={viewportWidth}
+				/>
 			)}
 
-			{current === "Top Repositories" && <TopRepositories />}
+			{current === "Top Repositories" && (
+				<TopRepositories viewportWidth={viewportWidth} />
+			)}
 		</>
 	);
-}
-
-function TopRepositories() {
-	<div className="pt-16 select-none">
-		<div className="p-10 m-5 rounded-3xl h-full w-auto bg-[#070F2B]">
-			<span>Repos</span>
-		</div>
-	</div>;
 }

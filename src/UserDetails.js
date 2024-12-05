@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe, faUser } from "@fortawesome/free-solid-svg-icons";
 import Section from "./Section";
 
-export default function UserDetails({ username, back }) {
+export default function UserDetails({ username, back, viewportWidth }) {
 	const [userInfo, setUserInfo] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -125,7 +125,10 @@ export default function UserDetails({ username, back }) {
 						</div>
 					</div>
 					<div className="select-none mb-4">
-						<Section username={username} />
+						<Section
+							username={username}
+							viewportWidth={viewportWidth}
+						/>
 					</div>
 				</>
 			)}

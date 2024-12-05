@@ -26,7 +26,7 @@ export default function Header({
 	}, [changeCurrent]);
 
 	return (
-		<div className="select-none flex justify-between bg-[#070F2B] text-[#e6e6f3] h-16 items-center border-b border-b-[#9290C3] border-solid fixed w-full z-[200]">
+		<div className="select-none flex justify-between bg-[#070F2B] text-[#e6e6f3] h-16 items-center border-b border-b-[#9290C3] border-solid fixed w-full z-[600]">
 			<div className="py-3 px-5 cursor-pointer font-bold">
 				<h1 className="text-xl" onClick={home}>
 					DevTrackr
