@@ -1,7 +1,7 @@
 {
 	"name": "devtrackr",
 	"version": "0.1.0",
-	"homepage": "https://JoyM268.github.io/DevTrackr",
+	"homepage": "https://devtrackrapp.netlify.app/",
 	"private": true,
 	"dependencies": {
 		"@fortawesome/fontawesome-svg-core": "^6.7.1",
