@@ -123,7 +123,7 @@ export default function Section({ username }) {
 function SectionContent({ sectionInfo, section, viewportWidth }) {
 	return (
 		<div
-			className={`flex p-2 sm:p-5 max-h-[384px] overflow-y-scroll sm:flex-wrap custom-scrollbar z-50 overflow-x-hidden flex-col sm:flex-row ${
+			className={`flex p-2 sm:p-5 max-h-[384px] items-center overflow-y-scroll sm:flex-wrap custom-scrollbar z-50 overflow-x-hidden flex-col sm:flex-row ${
 				sectionInfo === null || sectionInfo.length === 0
 					? "justify-center mt-40"
 					: ""

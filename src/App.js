@@ -34,7 +34,13 @@ export default function App() {
 
 	return (
 		<>
-			<Header menu={menu} menuOpen={menuOpen} home={home} />
+			<Header
+				menu={menu}
+				menuOpen={menuOpen}
+				home={home}
+				changeCurrent={changeCurrent}
+				current={current}
+			/>
 			<SideMenu
 				menu={menu}
 				current={current}
@@ -51,6 +57,16 @@ export default function App() {
 			{current === "UserDetails" && (
 				<UserDetails username={username} back={home} />
 			)}
+
+			{current === "Top Repositories" && <TopRepositories />}
 		</>
 	);
+}
+
+function TopRepositories() {
+	<div className="pt-16 select-none">
+		<div className="p-10 m-5 rounded-3xl h-full w-auto bg-[#070F2B]">
+			<span>Repos</span>
+		</div>
+	</div>;
 }
