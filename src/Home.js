@@ -1,8 +1,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import Search from "./Search";
-import Button from "./Button";
-import Image from "./programmer.png";
+import OtherOptions from "./OtherOptions";
 
 export default function Home({ username, setUsername, search }) {
 	useGSAP(() => {
@@ -65,23 +64,11 @@ export default function Home({ username, setUsername, search }) {
 			</div>
 			<div className="select-none">
 				<img
-					src={Image}
+					src="/programmer.png"
 					alt="programmer"
 					className="mt-32 h-[606px] hidden xl:block"
 				/>
 			</div>
-		</div>
-	);
-}
-
-function OtherOptions() {
-	return (
-		<div className="grid grid-flow-row gap-4 w-[350px] md:w-[600px] grid-cols-2 md:grid-cols-3 button select-none">
-			<Button>Check out your stats</Button>
-			<Button>Compare Users</Button>
-			<Button>Search Repositories</Button>
-			<Button>Search Organizations</Button>
-			<Button>License Generator</Button>
 		</div>
 	);
 }

@@ -18,8 +18,10 @@ export default function UserDetails({ username, back, viewportWidth }) {
 					`https://api.github.com/users/${username.trim()}`
 				);
 
-				if (!res.ok) {
-					throw new Error("User not Found");
+				if (res.status === 403) {
+					throw new Error("API rate limit exceeded");
+				} else if (!res.ok) {
+					throw new Error("An Error Occured");
 				}
 
 				let data = await res.json();

@@ -34,10 +34,11 @@ export default function Section({ username, viewportWidth }) {
 					}`
 				);
 
-				if (!res.ok) {
-					throw new Error("No Repositories Found");
+				if (res.status === 403) {
+					throw new Error("API rate limit exceeded");
+				} else if (!res.ok) {
+					throw new Error("An Error Occured");
 				}
-
 				let data = await res.json();
 				setSectionInfo(data);
 			} catch (err) {

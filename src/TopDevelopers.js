@@ -1,19 +1,19 @@
-import { useEffect, useState } from "react";
 import Loading from "./Loading";
-import TopRepoCard from "./TopRepoCard";
+import { useState, useEffect } from "react";
+import TopDevCard from "./TopDevCard";
 
-export default function TopRepositories({ viewportWidth }) {
-	const [repos, setRepos] = useState(null);
+export default function TopDevelopers({ viewportWidth }) {
+	const [dev, setDev] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		async function getRepo() {
+		async function getDevs() {
 			setError(null);
 			try {
 				setLoading(true);
 				let res = await fetch(
-					"https://api.github.com/search/repositories?q=stars:>0&sort=stars&order=desc&per_page=100"
+					" https://api.github.com/search/users?q=followers:>1000&sort=followers&order=desc&per_page=100 "
 				);
 				let data = await res.json();
 				if (res.status === 403) {
@@ -21,7 +21,7 @@ export default function TopRepositories({ viewportWidth }) {
 				} else if (!res.ok) {
 					throw new Error("An Error Occured");
 				}
-				setRepos(data?.items);
+				setDev(data.items);
 			} catch (err) {
 				setError(err.message);
 			} finally {
@@ -29,7 +29,7 @@ export default function TopRepositories({ viewportWidth }) {
 			}
 		}
 
-		getRepo();
+		getDevs();
 	}, []);
 
 	return (
@@ -47,13 +47,13 @@ export default function TopRepositories({ viewportWidth }) {
 					</div>
 				)}
 
-				{repos !== null && (
+				{dev !== null && (
 					<>
-						{repos?.map((repo, idx) => (
-							<TopRepoCard
+						{dev?.map((dev, idx) => (
+							<TopDevCard
 								viewportWidth={viewportWidth}
-								repoInfo={repo}
-								key={repo.id}
+								devInfo={dev}
+								key={dev.id}
 								num={idx + 1}
 							/>
 						))}

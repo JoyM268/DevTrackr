@@ -4,6 +4,7 @@ import SideMenu from "./SideMenu";
 import Home from "./Home";
 import UserDetails from "./UserDetails";
 import TopRepositories from "./TopRepositories";
+import TopDevelopers from "./TopDevelopers";
 
 export default function App() {
 	const [menu, setMenu] = useState(false);
@@ -15,6 +16,7 @@ export default function App() {
 		if (current !== option) {
 			setCurrent(option);
 			setUsername("");
+			setMenu(false);
 		}
 	}
 
@@ -26,6 +28,7 @@ export default function App() {
 		if (current !== "Home") {
 			setCurrent("Home");
 			setUsername("");
+			setMenu(false);
 		}
 	}
 
@@ -78,6 +81,10 @@ export default function App() {
 
 			{current === "Top Repositories" && (
 				<TopRepositories viewportWidth={viewportWidth} />
+			)}
+
+			{current === "Top Developers" && (
+				<TopDevelopers viewportWidth={viewportWidth} />
 			)}
 		</>
 	);
