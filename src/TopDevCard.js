@@ -10,7 +10,15 @@ export default function TopDevCard({ devInfo, num, viewportWidth }) {
 					/>
 					<div className="flex flex-col gap-1">
 						<span className="text-2xl font-bold">
-							{devInfo.login.length > 14 && viewportWidth < 375
+							{num}.{" "}
+							{devInfo.login.length > 14 &&
+							viewportWidth < 375 &&
+							viewportWidth >= 345
+								? devInfo.login.slice(0, 16) +
+								  " " +
+								  devInfo.login.slice(16)
+								: devInfo.login.length > 14 &&
+								  viewportWidth < 345
 								? devInfo.login.slice(0, 14) +
 								  " " +
 								  devInfo.login.slice(14)
