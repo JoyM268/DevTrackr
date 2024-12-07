@@ -1,6 +1,7 @@
 import Loading from "./Loading";
 import { useState, useEffect } from "react";
 import TopDevCard from "./TopDevCard";
+import { useRef } from "react";
 
 export default function TopDevelopers({ viewportWidth }) {
 	const [dev, setDev] = useState(null);
@@ -13,7 +14,7 @@ export default function TopDevelopers({ viewportWidth }) {
 			try {
 				setLoading(true);
 				let res = await fetch(
-					" https://api.github.com/search/users?q=followers:>1000&sort=followers&order=desc&per_page=100 "
+					" https://api.github.com/search/users?q=followers:>1000&sort=followers&order=desc&per_page=100"
 				);
 				let data = await res.json();
 				if (res.status === 403) {
@@ -31,6 +32,8 @@ export default function TopDevelopers({ viewportWidth }) {
 
 		getDevs();
 	}, []);
+
+	const scrollRef = useRef(null);
 
 	return (
 		<div className="pt-16 select-none">
@@ -55,6 +58,7 @@ export default function TopDevelopers({ viewportWidth }) {
 								devInfo={dev}
 								key={dev.id}
 								num={idx + 1}
+								scrollRef={scrollRef}
 							/>
 						))}
 					</>

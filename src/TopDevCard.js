@@ -1,6 +1,19 @@
-export default function TopDevCard({ devInfo, num, viewportWidth }) {
+import { motion } from "motion/react";
+
+export default function TopDevCard({ devInfo, num, viewportWidth, scrollRef }) {
 	return (
-		<div className="border-solid my-5 p-5 rounded-xl text-wrap break-words bg-[#1b1a55] border-[#b5d5ff] border">
+		<motion.div
+			initial={{ opacity: 0, x: -100 }}
+			whileInView={{ opacity: 1, x: 0 }}
+			transition={{
+				duration: 0.8,
+				type: "spring",
+				stiffness: 60,
+				damping: 15,
+			}}
+			viewport={{ once: true, root: scrollRef }}
+			className="border-solid my-5 p-5 rounded-xl text-wrap break-words bg-[#1b1a55] border-[#b5d5ff] border"
+		>
 			<div>
 				<div className="flex items-center gap-4 flex-col sm:flex-row text-center sm:text-left">
 					<img
@@ -33,6 +46,6 @@ export default function TopDevCard({ devInfo, num, viewportWidth }) {
 					</div>
 				</div>
 			</div>
-		</div>
+		</motion.div>
 	);
 }

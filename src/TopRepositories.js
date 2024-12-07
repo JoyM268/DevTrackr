@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
 import TopRepoCard from "./TopRepoCard";
+import { useRef } from "react";
 
 export default function TopRepositories({ viewportWidth }) {
 	const [repos, setRepos] = useState(null);
@@ -32,6 +33,8 @@ export default function TopRepositories({ viewportWidth }) {
 		getRepo();
 	}, []);
 
+	const scrollRef = useRef(null);
+
 	return (
 		<div className="pt-16 select-none">
 			<div className="py-5 px-10 m-5 rounded-3xl bg-[#070F2B] h-[calc(100vh-100px)] text-white overflow-y-scroll custom-scrollbar">
@@ -51,6 +54,7 @@ export default function TopRepositories({ viewportWidth }) {
 					<>
 						{repos?.map((repo, idx) => (
 							<TopRepoCard
+								scrollRef={scrollRef}
 								viewportWidth={viewportWidth}
 								repoInfo={repo}
 								key={repo.id}

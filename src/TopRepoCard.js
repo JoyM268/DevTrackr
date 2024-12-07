@@ -1,9 +1,26 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCodeFork } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "motion/react";
 
-export default function TopRepoCard({ repoInfo, num, viewportWidth }) {
+export default function TopRepoCard({
+	repoInfo,
+	num,
+	viewportWidth,
+	scrollRef,
+}) {
 	return (
-		<div className="bg-[#1b1a55] border border-[#b5d5ff] border-solid w-full my-5 p-5 rounded-xl items-end flex justify-between text-wrap gap-1 break-words">
+		<motion.div
+			initial={{ opacity: 0, x: -100 }}
+			whileInView={{ opacity: 1, x: 0 }}
+			transition={{
+				duration: 0.8,
+				type: "spring",
+				stiffness: 60,
+				damping: 15,
+			}}
+			viewport={{ once: true, root: scrollRef }}
+			className="bg-[#1b1a55] border border-[#b5d5ff] border-solid w-full my-5 p-5 rounded-xl items-end flex justify-between text-wrap gap-1 break-words"
+		>
 			<div className="flex flex-col gap-3">
 				<div className="text-3xl font-bold mb-8 sm:mb-1">
 					<span>{num}.</span>
@@ -32,6 +49,6 @@ export default function TopRepoCard({ repoInfo, num, viewportWidth }) {
 					View
 				</a>
 			</div>
-		</div>
+		</motion.div>
 	);
 }
