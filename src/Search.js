@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { motion } from "motion/react";
 
 export default function Search({ username, setUsername, search }) {
 	return (
@@ -12,12 +13,14 @@ export default function Search({ username, setUsername, search }) {
 					value={username}
 					onChange={(e) => setUsername(e.target.value)}
 				/>
-				<button
+				<motion.button
+					whileHover={{ opacity: 0.95 }}
+					whileTap={{ opacity: 1 }}
 					type="submit"
-					className="absolute right-0 text-[#e6e6f3] cursor-pointer bg-[#142256] h-full w-16 rounded-3xl border-2 border-[#51528f] border-l-0 hover:opacity-95"
+					className="absolute right-0 text-[#e6e6f3] cursor-pointer bg-[#142256] h-full w-16 rounded-3xl border-2 border-[#51528f] border-l-0 "
 				>
 					<FontAwesomeIcon icon={faMagnifyingGlass} />
-				</button>
+				</motion.button>
 			</form>
 		</div>
 	);

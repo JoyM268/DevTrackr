@@ -20,8 +20,9 @@ export default function SideMenu({ menu, current, changeCurrent }) {
 	return (
 		<motion.div
 			initial={{ x: 320 }}
-			animate={{ x: menu ? 0 : 320 }}
-			transition={{ type: "spring", stiffness: 300, damping: 30 }}
+			exit={{ x: 320 }}
+			animate={{ x: 0 }}
+			transition={{ type: "spring", stiffness: 230, damping: 30 }}
 			className="h-[calc(100%-64px)] bg-[#070F2B] w-80 fixed right-0 border-l border-solid border-l-[#9290C3] select-none bottom-0 z-[500] overflow-y-scroll overflow-x-hidden custom-scrollbar"
 		>
 			<nav className="text-[#e6e6f3] text-left">
@@ -142,7 +143,14 @@ export default function SideMenu({ menu, current, changeCurrent }) {
 						.
 					</p>
 					<p>
-						The source code for the project is available on GitHub.
+						The source code for the project is available on{" "}
+						<a
+							className="text-[#7886cb] hover:underline"
+							href="https://github.com/JoyM268/DevTrackr"
+						>
+							GitHub
+						</a>
+						.
 					</p>
 					<p>
 						The data displayed here is powered by the{" "}

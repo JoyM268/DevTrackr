@@ -3,7 +3,7 @@ import gsap from "gsap";
 import Search from "./Search";
 import OtherOptions from "./OtherOptions";
 
-export default function Home({ username, setUsername, search }) {
+export default function Home({ username, setUsername, search, changeCurrent }) {
 	useGSAP(() => {
 		let t1 = gsap.timeline();
 
@@ -60,7 +60,7 @@ export default function Home({ username, setUsername, search }) {
 					setUsername={setUsername}
 					search={search}
 				/>
-				<OtherOptions />
+				<OtherOptions changeCurrent={changeCurrent} />
 			</div>
 			<div className="select-none">
 				<img

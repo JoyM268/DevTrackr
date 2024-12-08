@@ -18,7 +18,9 @@ export default function TopRepositories({ viewportWidth }) {
 				);
 				let data = await res.json();
 				if (res.status === 403) {
-					throw new Error("API rate limit exceeded");
+					throw new Error(
+						"Github API Rate Limit Exceeded, Try Again Later."
+					);
 				} else if (!res.ok) {
 					throw new Error("An Error Occured");
 				}

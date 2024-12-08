@@ -5,6 +5,9 @@ import Home from "./Home";
 import UserDetails from "./UserDetails";
 import TopRepositories from "./TopRepositories";
 import TopDevelopers from "./TopDevelopers";
+import { AnimatePresence } from "motion/react";
+
+import LicenseGenerator from "./LicenseGenerator";
 
 export default function App() {
 	const [menu, setMenu] = useState(false);
@@ -58,16 +61,21 @@ export default function App() {
 				changeCurrent={changeCurrent}
 				current={current}
 			/>
-			<SideMenu
-				menu={menu}
-				current={current}
-				changeCurrent={changeCurrent}
-			/>
+			<AnimatePresence>
+				{menu && (
+					<SideMenu
+						menu={menu}
+						current={current}
+						changeCurrent={changeCurrent}
+					/>
+				)}
+			</AnimatePresence>
 			{current === "Home" && (
 				<Home
 					username={username}
 					setUsername={setUsername}
 					search={search}
+					changeCurrent={changeCurrent}
 				/>
 			)}
 
@@ -86,6 +94,8 @@ export default function App() {
 			{current === "Top Developers" && (
 				<TopDevelopers viewportWidth={viewportWidth} />
 			)}
+
+			{current === "License Generator" && <LicenseGenerator />}
 		</>
 	);
 }
