@@ -14,7 +14,7 @@ export default function TopDevelopers() {
 			try {
 				setLoading(true);
 				let res = await fetch(
-					" https://api.github.com/search/users?q=followers:>1000&sort=followers&order=desc&per_page=100"
+					"https://api.github.com/search/users?q=followers:>1000+type:user&sort=followers&order=desc&per_page=100"
 				);
 				let data = await res.json();
 				if (res.status === 403) {

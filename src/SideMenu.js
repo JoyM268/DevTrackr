@@ -56,12 +56,12 @@ export default function SideMenu({ menu, current, changeCurrent }) {
 					</h1>
 					<h1
 						className={`transition-all duration-200 p-4 options ${
-							current === "Discover Repositories"
+							current === "Code Search"
 								? "bg-[#2042bf] cursor-not-allowed"
 								: "bg-[#070F2B] cursor-pointer hover:bg-[#535C91]"
 						}`}
 					>
-						Discover Repositories
+						Code Search
 					</h1>
 					<h1
 						className={`transition-all duration-200 p-4 options ${
@@ -74,21 +74,12 @@ export default function SideMenu({ menu, current, changeCurrent }) {
 					</h1>
 					<h1
 						className={`transition-all duration-200 p-4 options ${
-							current === "Top Gists"
+							current === "Compare Repositories"
 								? "bg-[#2042bf] cursor-not-allowed"
 								: "bg-[#070F2B] cursor-pointer hover:bg-[#535C91]"
 						}`}
 					>
-						Top Gists
-					</h1>
-					<h1
-						className={`transition-all duration-200 p-4 options ${
-							current === "Discover Gists"
-								? "bg-[#2042bf] cursor-not-allowed"
-								: "bg-[#070F2B] cursor-pointer hover:bg-[#535C91]"
-						}`}
-					>
-						Discover Gists
+						Compare Repositories
 					</h1>
 					<h1
 						className={`transition-all duration-200 p-4 options ${
@@ -98,6 +89,15 @@ export default function SideMenu({ menu, current, changeCurrent }) {
 						}`}
 					>
 						Compare Users
+					</h1>
+					<h1
+						className={`transition-all duration-200 p-4 options ${
+							current === "Search by Language"
+								? "bg-[#2042bf] cursor-not-allowed"
+								: "bg-[#070F2B] cursor-pointer hover:bg-[#535C91]"
+						}`}
+					>
+						Search by Language
 					</h1>
 				</div>
 				<hr />

@@ -85,7 +85,12 @@ export default function App() {
 
 			{current === "Search Repositories" && <SearchRepositories />}
 
-			{current === "Search Users" && <SearchUsers viewUser={viewUser} />}
+			{current === "Search Users" && (
+				<SearchUsers viewUser={viewUser} isOrg={false} />
+			)}
+			{current === "Search Organizations" && (
+				<SearchUsers viewUser={viewUser} isOrg={true} />
+			)}
 		</>
 	);
 }

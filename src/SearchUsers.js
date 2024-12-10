@@ -1,10 +1,10 @@
 import Search from "./Search";
 import Loading from "./Loading";
-import SearchDevCard from "./SearchDevCard";
+import SearchUserCard from "./SearchUserCard";
 import { useEffect, useRef, useState } from "react";
 
-export default function SearchUsers({ viewUser }) {
-	const [devs, setDevs] = useState("");
+export default function SearchUsers({ viewUser, isOrg }) {
+	const [users, setUsers] = useState("");
 	const [result, setResult] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -14,12 +14,14 @@ export default function SearchUsers({ viewUser }) {
 		setError(null);
 		const controller = new AbortController();
 		const signal = controller.signal;
-		async function getDevs() {
+		async function getUsers() {
 			try {
 				setLoading(true);
 				setResult(null);
 				let res = await fetch(
-					`https://api.github.com/search/users?q=${devs}+type:user`,
+					`https://api.github.com/search/users?q=${users}+type:${
+						isOrg ? "organization" : "user"
+					}`,
 					{ signal }
 				);
 
@@ -40,16 +42,16 @@ export default function SearchUsers({ viewUser }) {
 				setLoading(false);
 			}
 		}
-		if (devs === "") {
+		if (users === "") {
 			setResult("");
 		} else {
-			getDevs();
+			getUsers();
 		}
 
 		return () => {
 			controller.abort();
 		};
-	}, [devs]);
+	}, [users, isOrg]);
 
 	return (
 		<div className="pt-16 h-full w-full">
@@ -62,9 +64,11 @@ export default function SearchUsers({ viewUser }) {
 					}`}
 				>
 					<Search
-						info={devs}
-						setInfo={setDevs}
-						placeholder="Enter Username"
+						info={users}
+						setInfo={setUsers}
+						placeholder={
+							isOrg ? "Enter Organization Name" : "Enter Username"
+						}
 					/>
 				</div>
 				<div
@@ -82,10 +86,10 @@ export default function SearchUsers({ viewUser }) {
 					{!loading &&
 						!error &&
 						result?.total_count !== 0 &&
-						result?.items?.map((dev) => (
-							<SearchDevCard
-								devInfo={dev}
-								key={dev.id}
+						result?.items?.map((user) => (
+							<SearchUserCard
+								userInfo={user}
+								key={user.id}
 								scrollRef={scrollRef}
 								viewUser={viewUser}
 							/>
