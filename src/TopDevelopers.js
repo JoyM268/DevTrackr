@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import TopDevCard from "./TopDevCard";
 import { useRef } from "react";
 
-export default function TopDevelopers({ viewportWidth }) {
+export default function TopDevelopers() {
 	const [dev, setDev] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -56,7 +56,6 @@ export default function TopDevelopers({ viewportWidth }) {
 					<>
 						{dev?.map((dev, idx) => (
 							<TopDevCard
-								viewportWidth={viewportWidth}
 								devInfo={dev}
 								key={dev.id}
 								num={idx + 1}

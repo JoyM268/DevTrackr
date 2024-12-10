@@ -6,7 +6,7 @@ export default function RepositoryCard({ repoInfo }) {
 		<div className="p-5 bg-[#1b1a55] rounded-lg flex gap-1 flex-col border border-[#b5d5ff] border-solid m-2">
 			<a
 				href={repoInfo.html_url}
-				className="hover:underline underline-offset-2 font-bold text-2xl text-wrap"
+				className="hover:underline underline-offset-2 font-bold text-2xl text-wrap break-all"
 			>
 				{repoInfo.name}
 			</a>

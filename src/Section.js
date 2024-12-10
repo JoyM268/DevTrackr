@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Loading from "./Loading";
 import SectionContent from "./SectionContent";
 
-export default function Section({ username, viewportWidth }) {
+export default function Section({ username }) {
 	const [section, setSection] = useState("Repositories");
 	const [sectionInfo, setSectionInfo] = useState(null);
 	const [loading, setLoading] = useState(false);
@@ -95,11 +95,7 @@ export default function Section({ username, viewportWidth }) {
 					</div>
 				)}
 
-				<SectionContent
-					sectionInfo={sectionInfo}
-					section={section}
-					viewportWidth={viewportWidth}
-				/>
+				<SectionContent sectionInfo={sectionInfo} section={section} />
 			</div>
 		</div>
 	);

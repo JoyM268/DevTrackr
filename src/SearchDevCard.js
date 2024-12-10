@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 
-export default function TopDevCard({ devInfo, num, scrollRef }) {
+export default function TopDevCard({ devInfo, scrollRef, viewUser }) {
 	return (
 		<motion.div
 			initial={{ opacity: 0, x: -100 }}
@@ -23,14 +23,16 @@ export default function TopDevCard({ devInfo, num, scrollRef }) {
 					/>
 					<div className="flex flex-col gap-1">
 						<span className="text-2xl font-bold break-all">
-							{num}. {devInfo.login}
+							{devInfo.login}
 						</span>
-						<a
-							href={devInfo.html_url}
-							className="text-[#b5d5ff] underline underline-offset-2 px-1"
+						<span
+							className="text-[#b5d5ff] underline underline-offset-2 px-1 cursor-pointer"
+							onClick={() => {
+								viewUser(devInfo.login);
+							}}
 						>
-							Visit Profile
-						</a>
+							View More
+						</span>
 					</div>
 				</div>
 			</div>

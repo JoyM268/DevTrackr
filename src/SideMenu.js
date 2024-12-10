@@ -70,7 +70,7 @@ export default function SideMenu({ menu, current, changeCurrent }) {
 								: "bg-[#070F2B] cursor-pointer hover:bg-[#535C91]"
 						}`}
 					>
-						Discover Organizations
+						Search Organizations
 					</h1>
 					<h1
 						className={`transition-all duration-200 p-4 options ${

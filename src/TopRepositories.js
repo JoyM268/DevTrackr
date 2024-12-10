@@ -3,7 +3,7 @@ import Loading from "./Loading";
 import TopRepoCard from "./TopRepoCard";
 import { useRef } from "react";
 
-export default function TopRepositories({ viewportWidth }) {
+export default function TopRepositories() {
 	const [repos, setRepos] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -57,7 +57,6 @@ export default function TopRepositories({ viewportWidth }) {
 						{repos?.map((repo, idx) => (
 							<TopRepoCard
 								scrollRef={scrollRef}
-								viewportWidth={viewportWidth}
 								repoInfo={repo}
 								key={repo.id}
 								num={idx + 1}

@@ -2,7 +2,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCodeFork } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "motion/react";
 
-export default function TopRepoCard({ repoInfo, num, scrollRef }) {
+export default function SearchRepoCard({ repoInfo, scrollRef }) {
 	return (
 		<motion.div
 			initial={{ opacity: 0, x: -100 }}
@@ -17,9 +17,8 @@ export default function TopRepoCard({ repoInfo, num, scrollRef }) {
 			className="bg-[#1b1a55] border border-[#b5d5ff] border-solid w-full my-5 p-5 rounded-xl items-end flex justify-between text-wrap gap-1 break-words"
 		>
 			<div className="flex flex-col gap-3">
-				<div className="text-3xl font-bold mb-8 sm:mb-1 break-all">
-					<span>{num}.</span>
-					<span>{repoInfo.name}</span>
+				<div className="text-3xl font-bold mb-8 sm:mb-1">
+					<span className="break-w break-all">{repoInfo.name}</span>
 				</div>
 				<div className="flex flex-col gap-1">
 					<span>⭐ {repoInfo.stargazers_count} Stars</span>
@@ -35,7 +34,7 @@ export default function TopRepoCard({ repoInfo, num, scrollRef }) {
 					href={repoInfo.html_url}
 					className="text-lg text-[#b5d5ff] underline underline-offset-2"
 				>
-					View
+					View Repository
 				</a>
 			</div>
 		</motion.div>

@@ -227,7 +227,7 @@ export default function LicenseGenerator() {
 					</div>
 
 					<div
-						className={`rounded-3xl bg-[#070F2B] h-[calc(100vh-100px)] md:flex-1 mt-4 md:mt-8 mx-10 min-w-[350px] mb-9 md:mb-1 text-[#eeeeee] px-8 py-5 overflow-y-scroll custom-scrollbar text-center ${
+						className={`rounded-3xl bg-[#070F2B] h-[calc(100vh-100px)] md:flex-1 mt-1 md:mt-8 mx-4 md:mx-10 min-w-[350px] mb-9 md:mb-1 text-[#eeeeee] px-8 py-5 overflow-y-scroll custom-scrollbar text-center ${
 							selectedLicense === "none" || loadingR || errorR
 								? "items-center justify-center text-2xl font-bold flex pt-0"
 								: ""

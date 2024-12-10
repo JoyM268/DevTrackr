@@ -13,9 +13,8 @@ export default function UserDetails({ username, back, viewportWidth }) {
 		async function getData() {
 			try {
 				setError(null);
-				setLoading(true);
 				let res = await fetch(
-					`https://api.github.com/users/${username.trim()}`
+					`https://api.github.com/users/${username}`
 				);
 
 				if (res.status === 403) {
@@ -70,7 +69,7 @@ export default function UserDetails({ username, back, viewportWidth }) {
 								/>
 								<div className="text-xl text-white flex flex-col gap-3">
 									<h1>
-										<span className="font-bold">
+										<span className="font-bold break-all">
 											Username:{"  "}
 										</span>
 										{userInfo.login}

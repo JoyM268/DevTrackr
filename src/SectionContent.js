@@ -3,11 +3,7 @@ import FollowCard from "./FollowCard";
 import GistCard from "./GistCard";
 import EventCard from "./EventCard";
 
-export default function SectionContent({
-	sectionInfo,
-	section,
-	viewportWidth,
-}) {
+export default function SectionContent({ sectionInfo, section }) {
 	return (
 		<div
 			className={`flex p-2 sm:p-5 max-h-[384px] items-center overflow-y-scroll sm:flex-wrap custom-scrollbar z-50 overflow-x-hidden flex-col sm:flex-row ${
@@ -30,19 +26,11 @@ export default function SectionContent({
 
 			{section === "Followers" &&
 				sectionInfo?.map((followInfo) => (
-					<FollowCard
-						followInfo={followInfo}
-						key={followInfo.id}
-						viewportWidth={viewportWidth}
-					/>
+					<FollowCard followInfo={followInfo} key={followInfo.id} />
 				))}
 			{section === "Following" &&
 				sectionInfo?.map((followInfo) => (
-					<FollowCard
-						followInfo={followInfo}
-						key={followInfo.id}
-						viewportWidth={viewportWidth}
-					/>
+					<FollowCard followInfo={followInfo} key={followInfo.id} />
 				))}
 
 			{section === "Followers" &&

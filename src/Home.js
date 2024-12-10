@@ -56,9 +56,11 @@ export default function Home({ username, setUsername, search, changeCurrent }) {
 					</p>
 				</div>
 				<Search
-					username={username}
-					setUsername={setUsername}
+					info={username}
+					setInfo={setUsername}
 					search={search}
+					placeholder="Enter Username"
+					button={true}
 				/>
 				<OtherOptions changeCurrent={changeCurrent} />
 			</div>

@@ -3,7 +3,7 @@ export default function EventCard({ eventInfo }) {
 		<div className="p-5 m-2 flex flex-col bg-[#1b1a55] rounded-lg border border-[#b5d5ff] border-solid gap-1">
 			<div className="flex flex-col">
 				<span className="text-xs">{eventInfo?.type}</span>
-				<span className="text-lg font-bold">
+				<span className="text-lg font-bold break-all">
 					{eventInfo?.repo.name}
 				</span>
 			</div>

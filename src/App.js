@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Header from "./Header";
 import SideMenu from "./SideMenu";
 import Home from "./Home";
@@ -6,14 +6,20 @@ import UserDetails from "./UserDetails";
 import TopRepositories from "./TopRepositories";
 import TopDevelopers from "./TopDevelopers";
 import { AnimatePresence } from "motion/react";
-
 import LicenseGenerator from "./LicenseGenerator";
+import SearchRepositories from "./SearchRepositories";
+import SearchUsers from "./SearchUsers";
 
 export default function App() {
 	const [menu, setMenu] = useState(false);
 	const [username, setUsername] = useState("");
 	const [current, setCurrent] = useState("Home");
-	const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+
+	function viewUser(name) {
+		setUsername(name);
+		setMenu(false);
+		setCurrent("UserDetails");
+	}
 
 	function changeCurrent(option) {
 		if (current !== option) {
@@ -39,18 +45,6 @@ export default function App() {
 		e.preventDefault();
 		if (username !== "") setCurrent("UserDetails");
 	}
-
-	useEffect(() => {
-		function handleResize() {
-			setViewportWidth(window.innerWidth);
-		}
-
-		window.addEventListener("resize", handleResize);
-
-		return () => {
-			window.removeEventListener("resize", handleResize);
-		};
-	}, []);
 
 	return (
 		<>
@@ -80,22 +74,18 @@ export default function App() {
 			)}
 
 			{current === "UserDetails" && (
-				<UserDetails
-					username={username}
-					back={home}
-					viewportWidth={viewportWidth}
-				/>
+				<UserDetails username={username} back={home} />
 			)}
 
-			{current === "Top Repositories" && (
-				<TopRepositories viewportWidth={viewportWidth} />
-			)}
+			{current === "Top Repositories" && <TopRepositories />}
 
-			{current === "Top Developers" && (
-				<TopDevelopers viewportWidth={viewportWidth} />
-			)}
+			{current === "Top Developers" && <TopDevelopers />}
 
 			{current === "License Generator" && <LicenseGenerator />}
+
+			{current === "Search Repositories" && <SearchRepositories />}
+
+			{current === "Search Users" && <SearchUsers viewUser={viewUser} />}
 		</>
 	);
 }
