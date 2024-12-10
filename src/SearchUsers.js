@@ -10,48 +10,72 @@ export default function SearchUsers({ viewUser, isOrg }) {
 	const [error, setError] = useState(null);
 	const scrollRef = useRef();
 
-	useEffect(() => {
-		setError(null);
-		const controller = new AbortController();
-		const signal = controller.signal;
-		async function getUsers() {
-			try {
-				setLoading(true);
-				setResult(null);
-				let res = await fetch(
-					`https://api.github.com/search/users?q=${users}+type:${
-						isOrg ? "organization" : "user"
-					}`,
-					{ signal }
+	async function getUser(query) {
+		try {
+			setError(null);
+			setLoading(true);
+			setResult(null);
+			const url = query
+				? `https://api.github.com/search/users?q=${query}+type:user&per_page=100`
+				: "https://api.github.com/search/users?q=followers:>1000+type:user&sort=followers&order=desc&per_page=100";
+			let res = await fetch(url);
+			let data = await res.json();
+			if (res.status === 403) {
+				throw new Error(
+					"Github API Rate Limit Exceeded, Try Agian Later"
 				);
-
-				let data = await res.json();
-				if (res.status === 403) {
-					throw new Error(
-						"Github API Rate Limit Exceeded, Try Agian Later"
-					);
-				} else if (!res.ok) {
-					throw new Error("An Error Occured");
-				}
-				setResult(data);
-			} catch (err) {
-				if (err.name !== "AbortError") {
-					setError(err.message);
-				}
-			} finally {
-				setLoading(false);
+			} else if (!res.ok) {
+				throw new Error("An Error Occured");
 			}
+			setResult(data);
+		} catch (err) {
+			setError(err.message);
+		} finally {
+			setLoading(false);
 		}
-		if (users === "") {
-			setResult("");
-		} else {
-			getUsers();
-		}
+	}
 
-		return () => {
-			controller.abort();
-		};
-	}, [users, isOrg]);
+	async function getOrgs(query) {
+		try {
+			setError(null);
+			setLoading(true);
+			setResult(null);
+			const url = query
+				? `https://api.github.com/search/users?q=${query}+type:organization&per_page=100`
+				: "https://api.github.com/search/users?q=followers:>1000+type:organization&sort=followers&order=desc&per_page=100";
+			let res = await fetch(url);
+			let data = await res.json();
+			if (res.status === 403) {
+				throw new Error(
+					"Github API Rate Limit Exceeded, Try Agian Later"
+				);
+			} else if (!res.ok) {
+				throw new Error("An Error Occured");
+			}
+			setResult(data);
+		} catch (err) {
+			setError(err.message);
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	useEffect(() => {
+		if (isOrg) {
+			getOrgs("");
+		} else {
+			getUser("");
+		}
+	}, [isOrg]);
+
+	function searchUser(e) {
+		e.preventDefault();
+		if (!isOrg) {
+			getUser(users);
+		} else {
+			getOrgs(users);
+		}
+	}
 
 	return (
 		<div className="pt-16 h-full w-full">
@@ -69,6 +93,8 @@ export default function SearchUsers({ viewUser, isOrg }) {
 						placeholder={
 							isOrg ? "Enter Organization Name" : "Enter Username"
 						}
+						search={searchUser}
+						button={true}
 					/>
 				</div>
 				<div

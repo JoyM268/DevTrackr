@@ -56,21 +56,30 @@ export default function SideMenu({ menu, current, changeCurrent }) {
 					</h1>
 					<h1
 						className={`transition-all duration-200 p-4 options ${
-							current === "Code Search"
+							current === "Search Users"
 								? "bg-[#2042bf] cursor-not-allowed"
 								: "bg-[#070F2B] cursor-pointer hover:bg-[#535C91]"
 						}`}
 					>
-						Code Search
+						Search Users
 					</h1>
 					<h1
 						className={`transition-all duration-200 p-4 options ${
-							current === "Discover Organizations"
+							current === "Top Organizations"
 								? "bg-[#2042bf] cursor-not-allowed"
 								: "bg-[#070F2B] cursor-pointer hover:bg-[#535C91]"
 						}`}
 					>
-						Search Organizations
+						Top Organizations
+					</h1>
+					<h1
+						className={`transition-all duration-200 p-4 options ${
+							current === "Top Forks"
+								? "bg-[#2042bf] cursor-not-allowed"
+								: "bg-[#070F2B] cursor-pointer hover:bg-[#535C91]"
+						}`}
+					>
+						Top Forks
 					</h1>
 					<h1
 						className={`transition-all duration-200 p-4 options ${
@@ -89,15 +98,6 @@ export default function SideMenu({ menu, current, changeCurrent }) {
 						}`}
 					>
 						Compare Users
-					</h1>
-					<h1
-						className={`transition-all duration-200 p-4 options ${
-							current === "Search by Language"
-								? "bg-[#2042bf] cursor-not-allowed"
-								: "bg-[#070F2B] cursor-pointer hover:bg-[#535C91]"
-						}`}
-					>
-						Search by Language
 					</h1>
 				</div>
 				<hr />

@@ -1,30 +1,32 @@
 import Loading from "./Loading";
 import { useState, useEffect } from "react";
-import TopDevCard from "./TopDevCard";
+import TopUserCard from "./TopUserCard";
 import { useRef } from "react";
 
-export default function TopDevelopers() {
-	const [dev, setDev] = useState(null);
+export default function TopUsers({ isOrg }) {
+	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
 
 	useEffect(() => {
-		async function getDevs() {
+		async function getUsers() {
 			setError(null);
 			try {
 				setLoading(true);
 				let res = await fetch(
-					"https://api.github.com/search/users?q=followers:>1000+type:user&sort=followers&order=desc&per_page=100"
+					isOrg
+						? "https://api.github.com/search/users?q=followers:>1000+type:organization&sort=followers&order=desc&per_page=100"
+						: "https://api.github.com/search/users?q=followers:>1000+type:user&sort=followers&order=desc&per_page=100"
 				);
 				let data = await res.json();
 				if (res.status === 403) {
 					throw new Error(
-						"Github API Rate Limit Exceeded, Try Again Later."
+						"Github API Rate Limit Exceeded, Try Again Later"
 					);
 				} else if (!res.ok) {
 					throw new Error("An Error Occured");
 				}
-				setDev(data.items);
+				setUser(data.items);
 			} catch (err) {
 				setError(err.message);
 			} finally {
@@ -32,8 +34,8 @@ export default function TopDevelopers() {
 			}
 		}
 
-		getDevs();
-	}, []);
+		getUsers();
+	}, [isOrg]);
 
 	const scrollRef = useRef(null);
 
@@ -52,12 +54,12 @@ export default function TopDevelopers() {
 					</div>
 				)}
 
-				{dev !== null && (
+				{user !== null && (
 					<>
-						{dev?.map((dev, idx) => (
-							<TopDevCard
-								devInfo={dev}
-								key={dev.id}
+						{user?.map((u, idx) => (
+							<TopUserCard
+								userInfo={u}
+								key={u.id}
 								num={idx + 1}
 								scrollRef={scrollRef}
 							/>

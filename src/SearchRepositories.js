@@ -10,46 +10,49 @@ export default function SearchRepositories() {
 	const [error, setError] = useState(null);
 	const scrollRef = useRef();
 
-	useEffect(() => {
-		setError(null);
-		const controller = new AbortController();
-		const signal = controller.signal;
-		async function getRepos() {
-			try {
-				setLoading(true);
-				setResult(null);
-				let res = await fetch(
-					`https://api.github.com/search/repositories?q=${repo}`,
-					{ signal }
-				);
+	async function getRepos(query) {
+		try {
+			setLoading(true);
+			setResult(null);
+			setError(null);
 
-				let data = await res.json();
+			const repoQuery = query.trim();
+			const url = repoQuery
+				? `https://api.github.com/search/repositories?q=${repoQuery}&per_page=100`
+				: "https://api.github.com/search/repositories?q=stars:>0&sort=stars&order=desc&per_page=100";
+
+			let res = await fetch(url);
+			if (!res.ok) {
 				if (res.status === 403) {
 					throw new Error(
-						"Github API Rate Limit Exceeded, Try Agian Later"
+						"GitHub API Rate Limit Exceeded. Try again later or sign in."
 					);
-				} else if (!res.ok) {
-					throw new Error("An Error Occured");
+				} else {
+					throw new Error(`Error: ${res.status} ${res.statusText}`);
 				}
-				setResult(data);
-			} catch (err) {
-				if (err.name !== "AbortError") {
-					setError(err.message);
-				}
-			} finally {
-				setLoading(false);
 			}
-		}
-		if (repo === "") {
-			setResult("");
-		} else {
-			getRepos();
-		}
 
-		return () => {
-			controller.abort();
-		};
-	}, [repo]);
+			const data = await res.json();
+			if (!data.items || data.items.length === 0) {
+				throw new Error("No repositories found.");
+			}
+
+			setResult(data);
+		} catch (err) {
+			setError(err.message || "An error occurred");
+		} finally {
+			setLoading(false);
+		}
+	}
+
+	useEffect(() => {
+		getRepos("");
+	}, []);
+
+	function searchRepo(e) {
+		e.preventDefault();
+		getRepos(repo);
+	}
 
 	return (
 		<div className="pt-16 h-full w-full">
@@ -65,6 +68,8 @@ export default function SearchRepositories() {
 						info={repo}
 						setInfo={setRepo}
 						placeholder="Enter Repository Name"
+						button={true}
+						search={searchRepo}
 					/>
 				</div>
 				<div

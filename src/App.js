@@ -4,7 +4,7 @@ import SideMenu from "./SideMenu";
 import Home from "./Home";
 import UserDetails from "./UserDetails";
 import TopRepositories from "./TopRepositories";
-import TopDevelopers from "./TopDevelopers";
+import TopUsers from "./TopUsers";
 import { AnimatePresence } from "motion/react";
 import LicenseGenerator from "./LicenseGenerator";
 import SearchRepositories from "./SearchRepositories";
@@ -55,6 +55,7 @@ export default function App() {
 				changeCurrent={changeCurrent}
 				current={current}
 			/>
+
 			<AnimatePresence>
 				{menu && (
 					<SideMenu
@@ -64,6 +65,7 @@ export default function App() {
 					/>
 				)}
 			</AnimatePresence>
+
 			{current === "Home" && (
 				<Home
 					username={username}
@@ -77,9 +79,11 @@ export default function App() {
 				<UserDetails username={username} back={home} />
 			)}
 
-			{current === "Top Repositories" && <TopRepositories />}
+			{current === "Top Repositories" && (
+				<TopRepositories isFork={false} />
+			)}
 
-			{current === "Top Developers" && <TopDevelopers />}
+			{current === "Top Developers" && <TopUsers isOrg={false} />}
 
 			{current === "License Generator" && <LicenseGenerator />}
 
@@ -88,9 +92,13 @@ export default function App() {
 			{current === "Search Users" && (
 				<SearchUsers viewUser={viewUser} isOrg={false} />
 			)}
+
 			{current === "Search Organizations" && (
 				<SearchUsers viewUser={viewUser} isOrg={true} />
 			)}
+
+			{current === "Top Organizations" && <TopUsers isOrg={true} />}
+			{current === "Top Forks" && <TopRepositories isFork={true} />}
 		</>
 	);
 }

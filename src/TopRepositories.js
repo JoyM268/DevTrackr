@@ -3,7 +3,7 @@ import Loading from "./Loading";
 import TopRepoCard from "./TopRepoCard";
 import { useRef } from "react";
 
-export default function TopRepositories() {
+export default function TopRepositories({ isFork }) {
 	const [repos, setRepos] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
@@ -14,12 +14,14 @@ export default function TopRepositories() {
 			try {
 				setLoading(true);
 				let res = await fetch(
-					"https://api.github.com/search/repositories?q=stars:>0&sort=stars&order=desc&per_page=100"
+					`https://api.github.com/search/repositories?q=stars:>0&sort=${
+						isFork ? "forks" : "stars"
+					}&order=desc&per_page=100`
 				);
 				let data = await res.json();
 				if (res.status === 403) {
 					throw new Error(
-						"Github API Rate Limit Exceeded, Try Again Later."
+						"Github API Rate Limit Exceeded, Try Again Later"
 					);
 				} else if (!res.ok) {
 					throw new Error("An Error Occured");
@@ -33,7 +35,7 @@ export default function TopRepositories() {
 		}
 
 		getRepo();
-	}, []);
+	}, [isFork]);
 
 	const scrollRef = useRef(null);
 
@@ -46,7 +48,7 @@ export default function TopRepositories() {
 					</div>
 				)}
 
-				{error !== null && (
+				{error && (
 					<div className="flex items-center justify-center h-full text-3xl font-bold">
 						<h1>{error.message}</h1>
 					</div>

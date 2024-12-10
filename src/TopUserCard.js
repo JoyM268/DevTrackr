@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 
-export default function TopDevCard({ devInfo, num, scrollRef }) {
+export default function TopUserCard({ userInfo, num, scrollRef }) {
 	return (
 		<motion.div
 			initial={{ opacity: 0, x: -100 }}
@@ -17,16 +17,16 @@ export default function TopDevCard({ devInfo, num, scrollRef }) {
 			<div>
 				<div className="flex items-center gap-4 flex-col sm:flex-row text-center sm:text-left">
 					<img
-						src={devInfo.avatar_url}
-						alt={devInfo.login}
+						src={userInfo.avatar_url}
+						alt={userInfo.login}
 						className="h-24 rounded-full border border-solid border-[#b5d5ff]"
 					/>
 					<div className="flex flex-col gap-1">
 						<span className="text-2xl font-bold break-all">
-							{num}. {devInfo.login}
+							{num}. {userInfo.login}
 						</span>
 						<a
-							href={devInfo.html_url}
+							href={userInfo.html_url}
 							className="text-[#b5d5ff] underline underline-offset-2 px-1"
 						>
 							Visit Profile
