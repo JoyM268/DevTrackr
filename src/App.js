@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Header from "./Header";
 import SideMenu from "./SideMenu";
 import Home from "./Home";
@@ -9,12 +9,7 @@ import { AnimatePresence } from "motion/react";
 import LicenseGenerator from "./LicenseGenerator";
 import SearchRepositories from "./SearchRepositories";
 import SearchUsers from "./SearchUsers";
-import Loading from "./Loading";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGlobe, faUser } from "@fortawesome/free-solid-svg-icons";
 import Search from "./Search";
-import { LineChart } from "@mui/x-charts/LineChart";
-import Button from "./Button";
 
 export default function App() {
 	const [menu, setMenu] = useState(false);

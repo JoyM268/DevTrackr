@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "./Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -48,7 +48,7 @@ export default function UserDetails({ username, back }) {
 			)}
 
 			{error && (
-				<div className="flex justify-center items-center h-full flex-col gap-3 text-white select-none px-3 text-center">
+				<div className="flex justify-center items-center h-full flex-col gap-3 text-white select-none">
 					<h1 className="text-4xl font-bold">{error}</h1>
 					{back && (
 						<button
@@ -140,91 +140,21 @@ export default function UserDetails({ username, back }) {
 					<div className="select-none mb-4">
 						<Section username={username} />
 					</div>
-
-					<CommitGraph username={username} />
 				</>
 			)}
 		</div>
 	);
 }
 
-function CommitGraph({ username }) {
+function CommitGraph() {
 	const [type, setType] = useState("Line");
 	const [duration, setDuration] = useState(30);
-	const [xAxis, setXAxis] = useState([]);
-	const [yAxis, setYAxis] = useState([]);
-	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState(null);
 
 	function changeType(e) {
-		setType(e.target.innerText);
+		if (type !== e.target.innerText) {
+			setType(e.target.innerText);
+		}
 	}
-
-	// 	useEffect(() => {
-	// 		async function getData() {
-	// 			try {
-	// 				setError(null);
-	// 				setLoading(true);
-
-	// 				const startDate =
-	// 					duration !== 365
-	// 						? new Date(
-	// 								new Date().setDate(
-	// 									new Date().getDate() - duration
-	// 								)
-	// 						  )
-	// 						: new Date(
-	// 								new Date().setFullYear(
-	// 									new Date().getFullYear() - 1
-	// 								)
-	// 						  );
-	// 				const endDate = new Date();
-
-	// 				const map = new Map();
-	// 				let page = 1;
-	// 				let hasMoreData = true;
-
-	// 				while (hasMoreData) {
-	// 					const res = await fetch(
-	// 						`https://api.github.com/users/${username}/events?per_page=100&page=${page}`
-	// 					);
-	// 					const data = await res.json();
-
-	// 					if (!Array.isArray(data) || data.length === 0) {
-	// 						hasMoreData = false;
-	// 					} else {
-	// 						data.forEach((event) => {
-	// 							if (event.type === "PushEvent") {
-	// 								const date = event.created_at.split("T")[0];
-	// 								map.set(date, (map.get(date) || 0) + 1);
-	// 							}
-	// 						});
-	// 						page++;
-	// 					}
-	// 				}
-
-	// 				const xAxisData = [];
-	// 				const yAxisData = [];
-
-	// 				for (
-	// 					let d = new Date(startDate);
-	// 					d <= new Date(endDate);
-	// 					d.setDate(d.getDate() + 1)
-	// 				) {
-	// 					const dateString = d.toISOString().split("T")[0];
-	// 					xAxisData.push(dateString);
-	// 					yAxisData.push(map.get(dateString) || 0);
-	// 				}
-
-	// 				setXAxis(xAxisData);
-	// 				setYAxis(yAxisData);
-	// 			} catch (err) {
-	// 				setError(err.message);
-	// 			} finally {
-	// 				setLoading(false);
-	// 			}
-	// 		}
-	// 	}, [username, duration, type]);
 
 	return (
 		<div className="p-10 m-5 rounded-3xl w-auto bg-[#070F2B] flex flex-col md:flex-row justify-between gap-3 items-start border border-[#b5d5ff] border-solid relative select-none">
@@ -257,9 +187,9 @@ function CommitGraph({ username }) {
 					value={duration}
 				>
 					<option value={30}>Last 30 Days</option>
-					<option value={90}>Last 3 Months</option>
-					<option value={180}>Last 6 Months</option>
-					<option value={365}>Last 1 Year</option>
+					<option value={3}>Last 3 Months</option>
+					<option value={6}>Last 6 Months</option>
+					<option value={1}>Last 1 Year</option>
 				</select>
 			</div>
 			<div className="flex justify-center w-full">
@@ -288,22 +218,18 @@ function CommitGraph({ username }) {
 							},
 							"& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":
 								{
+									strokeWidth: "0.5",
 									fill: "#eeeeee",
 								},
+							// bottomAxis Line Styles
 							"& .MuiChartsAxis-bottom .MuiChartsAxis-line": {
-								stroke: "#eeeeee",
+								stroke: "#0000FF",
+								strokeWidth: 0.4,
 							},
+							// leftAxis Line Styles
 							"& .MuiChartsAxis-left .MuiChartsAxis-line": {
-								stroke: "#eeeeee",
-							},
-							"& .MuiChartsAxis-left .MuiChartsAxis-tick": {
-								stroke: "#eeeeee",
-							},
-							"& .MuiChartsAxis-bottom .MuiChartsAxis-tick": {
-								stroke: "#eeeeee",
-							},
-							"& .MuiChartsAxisHighlight-root": {
-								stroke: "#eeeeee",
+								stroke: "#00000FF",
+								strokeWidth: 0.4,
 							},
 						}}
 					/>
@@ -322,27 +248,6 @@ function CommitGraph({ username }) {
 						]}
 						width={900}
 						height={500}
-						sx={{
-							"& .MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
-								fill: "#eeeeee",
-							},
-							"& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":
-								{
-									fill: "#eeeeee",
-								},
-							"& .MuiChartsAxis-bottom .MuiChartsAxis-line": {
-								stroke: "#eeeeee",
-							},
-							"& .MuiChartsAxis-left .MuiChartsAxis-line": {
-								stroke: "#eeeeee",
-							},
-							"& .MuiChartsAxis-left .MuiChartsAxis-tick": {
-								stroke: "#eeeeee",
-							},
-							"& .MuiChartsAxis-bottom .MuiChartsAxis-tick": {
-								stroke: "#eeeeee",
-							},
-						}}
 					/>
 				)}
 			</div>
