@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "./Header";
 import SideMenu from "./SideMenu";
 import Home from "./Home";
@@ -9,6 +9,12 @@ import { AnimatePresence } from "motion/react";
 import LicenseGenerator from "./LicenseGenerator";
 import SearchRepositories from "./SearchRepositories";
 import SearchUsers from "./SearchUsers";
+import Loading from "./Loading";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGlobe, faUser } from "@fortawesome/free-solid-svg-icons";
+import Search from "./Search";
+import { LineChart } from "@mui/x-charts/LineChart";
+import Button from "./Button";
 
 export default function App() {
 	const [menu, setMenu] = useState(false);
@@ -98,7 +104,54 @@ export default function App() {
 			)}
 
 			{current === "Top Organizations" && <TopUsers isOrg={true} />}
+
 			{current === "Top Forks" && <TopRepositories isFork={true} />}
+
+			{current === "Your Stats" && <Stats />}
 		</>
+	);
+}
+
+function Stats() {
+	const [username, setUsername] = useState(
+		localStorage.getItem("username") ? localStorage.getItem("username") : ""
+	);
+
+	return (
+		<>
+			{!username ? (
+				<SearchUsername setUsername={setUsername} />
+			) : (
+				<UserDetails username={username} />
+			)}
+		</>
+	);
+}
+
+function SearchUsername({ setUsername }) {
+	const [user, setUser] = useState("");
+
+	function search() {
+		localStorage.setItem("username", user);
+		setUsername(user);
+	}
+
+	return (
+		<div className="h-full w-full flex justify-center items-start flex-col gap-1 text-[#eeeeee] p-20 md:items-center md:text-center">
+			<span className="text-7xl font-bold mt-[-100px]">
+				Find Your GitHub Stats
+			</span>
+			<p className="mb-5 max-w-[700px]">
+				Enter your GitHub username to view your personalized stats. Your
+				username will be saved for quicker access next time.
+			</p>
+			<Search
+				placeholder={"Enter Your Username"}
+				Button={true}
+				info={user}
+				setInfo={setUser}
+				search={search}
+			/>
+		</div>
 	);
 }
