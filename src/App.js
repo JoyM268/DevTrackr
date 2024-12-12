@@ -126,7 +126,8 @@ function Stats() {
 function SearchUsername({ setUsername }) {
 	const [user, setUser] = useState("");
 
-	function search() {
+	function search(e) {
+		e.preventDefault();
 		localStorage.setItem("username", user);
 		setUsername(user);
 	}

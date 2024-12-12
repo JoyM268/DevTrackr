@@ -10,10 +10,20 @@ export default function UserDetails({ username, back }) {
 	const [userInfo, setUserInfo] = useState(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState(null);
+	const [popup, setPopup] = useState(null);
+
+	function changePopup(option) {
+		if (popup === option || option === "close") {
+			setPopup(null);
+		} else {
+			setPopup(option);
+		}
+	}
 
 	useEffect(() => {
 		async function getData() {
 			try {
+				setLoading(true);
 				setError(null);
 				let res = await fetch(
 					`https://api.github.com/users/${username}`
@@ -132,11 +142,20 @@ export default function UserDetails({ username, back }) {
 						</div>
 					</div>
 					<div className="text-[#eeeeee] flex justify-around flex-wrap gap-5 p-10 m-5 rounded-3xl w-auto bg-[#070F2B] border border-[#b5d5ff] border-solid items-center">
-						<Button width={"200px"}>Unfollowed Followers</Button>
-						<Button width={"200px"}>Non-Mutual Followings</Button>
-						<Button width={"200px"}>Organizations</Button>
-						<Button width={"200px"}>Languages</Button>
+						<Button width={"200px"} changeCurrent={changePopup}>
+							Unfollowed Followers
+						</Button>
+						<Button width={"200px"} changeCurrent={changePopup}>
+							Non-Mutual Followings
+						</Button>
+						<Button width={"200px"} changeCurrent={changePopup}>
+							Organizations
+						</Button>
+						<Button width={"200px"} changeCurrent={changePopup}>
+							Languages
+						</Button>
 					</div>
+					<CommitGraph />
 					<div className="select-none mb-4">
 						<Section username={username} />
 					</div>
@@ -145,6 +164,8 @@ export default function UserDetails({ username, back }) {
 		</div>
 	);
 }
+
+function OtherFeatures() {}
 
 function CommitGraph() {
 	const [type, setType] = useState("Line");
@@ -192,64 +213,96 @@ function CommitGraph() {
 					<option value={1}>Last 1 Year</option>
 				</select>
 			</div>
-			<div className="flex justify-center w-full">
-				{type === "Line" ? (
-					<LineChart
-						xAxis={[
-							{
-								data: [1, 2, 3, 5, 8, 10],
-							},
-						]}
-						yAxis={[
-							{
-								data: [1, 2, 3, 5, 8, 10],
-							},
-						]}
-						series={[
-							{
-								data: [2, 5.5, 2, 8.5, 1.5, 5],
-							},
-						]}
-						width={900}
-						height={500}
-						sx={{
-							"& .MuiChartsAxis-left .MuiChartsAxis-tickLabel": {
-								fill: "#eeeeee",
-							},
-							"& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":
+			<div className="w-full flex justify-center items-center">
+				<div className="scroll overflow-x-scroll lg:overflow-hidden">
+					{type === "Line" ? (
+						<LineChart
+							xAxis={[
 								{
-									strokeWidth: "0.5",
-									fill: "#eeeeee",
+									data: [1, 2, 3, 5, 8, 10],
 								},
-							// bottomAxis Line Styles
-							"& .MuiChartsAxis-bottom .MuiChartsAxis-line": {
-								stroke: "#0000FF",
-								strokeWidth: 0.4,
-							},
-							// leftAxis Line Styles
-							"& .MuiChartsAxis-left .MuiChartsAxis-line": {
-								stroke: "#00000FF",
-								strokeWidth: 0.4,
-							},
-						}}
-					/>
-				) : (
-					<BarChart
-						xAxis={[
-							{
-								scaleType: "band",
-								data: ["group A", "group B", "group C"],
-							},
-						]}
-						series={[
-							{ data: [4, 3, 5] },
-							{ data: [1, 6, 3] },
-							{ data: [2, 5, 6] },
-						]}
-						width={900}
-						height={500}
-					/>
-				)}
+							]}
+							yAxis={[
+								{
+									data: [1, 2, 3, 5, 8, 10],
+								},
+							]}
+							series={[
+								{
+									data: [2, 5.5, 2, 8.5, 1.5, 5],
+								},
+							]}
+							width={900}
+							height={500}
+							sx={{
+								"& .MuiChartsAxis-left .MuiChartsAxis-tickLabel":
+									{
+										fill: "#eeeeee",
+									},
+								"& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":
+									{
+										fill: "#eeeeee",
+									},
+								"& .MuiChartsAxis-bottom .MuiChartsAxis-line": {
+									stroke: "#eeeeee",
+								},
+								"& .MuiChartsAxis-left .MuiChartsAxis-line": {
+									stroke: "#eeeeee",
+								},
+								"& .MuiChartsAxis-left .MuiChartsAxis-tick": {
+									stroke: "#eeeeee",
+								},
+								"& .MuiChartsAxis-bottom .MuiChartsAxis-tick": {
+									stroke: "#eeeeee",
+								},
+								"& .MuiChartsAxisHighlight-root": {
+									stroke: "#eeeeee",
+								},
+							}}
+						/>
+					) : (
+						<BarChart
+							xAxis={[
+								{
+									scaleType: "band",
+									data: ["group A", "group B", "group C"],
+								},
+							]}
+							series={[
+								{ data: [4, 3, 5] },
+								{ data: [1, 6, 3] },
+								{ data: [2, 5, 6] },
+							]}
+							width={900}
+							height={500}
+							sx={{
+								"& .MuiChartsAxis-left .MuiChartsAxis-tickLabel":
+									{
+										fill: "#eeeeee",
+									},
+								"& .MuiChartsAxis-bottom .MuiChartsAxis-tickLabel":
+									{
+										fill: "#eeeeee",
+									},
+								"& .MuiChartsAxis-bottom .MuiChartsAxis-line": {
+									stroke: "#eeeeee",
+								},
+								"& .MuiChartsAxis-left .MuiChartsAxis-line": {
+									stroke: "#eeeeee",
+								},
+								"& .MuiChartsAxis-left .MuiChartsAxis-tick": {
+									stroke: "#eeeeee",
+								},
+								"& .MuiChartsAxis-bottom .MuiChartsAxis-tick": {
+									stroke: "#eeeeee",
+								},
+								"& .MuiChartsAxisHighlight-root": {
+									stroke: "#eeeeee",
+								},
+							}}
+						/>
+					)}
+				</div>
 			</div>
 		</div>
 	);

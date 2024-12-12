@@ -1,10 +1,10 @@
 export default function SectionOptions({
 	changeSection,
 	section,
-	tl,
-	bl,
-	tr,
-	br,
+	tl = false,
+	bl = false,
+	tr = false,
+	br = false,
 	children,
 }) {
 	return (
@@ -26,10 +26,3 @@ export default function SectionOptions({
 		</h1>
 	);
 }
-
-SectionOptions.defaultProps = {
-	bl: false,
-	tl: false,
-	tr: false,
-	br: false,
-};

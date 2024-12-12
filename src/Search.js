@@ -2,7 +2,15 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { motion } from "motion/react";
 
-export default function Search({ info, setInfo, search, placeholder, button }) {
+export default function Search({
+	info,
+	setInfo,
+	search = (e) => {
+		e.preventDefault();
+	},
+	placeholder,
+	button,
+}) {
 	return (
 		<div className="relative w-[350px] md:w-[600px] search">
 			<form className="block relative" onSubmit={search}>
@@ -27,9 +35,3 @@ export default function Search({ info, setInfo, search, placeholder, button }) {
 		</div>
 	);
 }
-
-Search.defaultProps = {
-	search: (e) => {
-		e.preventDefault();
-	},
-};

@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 
-export default function Button({ children, changeCurrent, width }) {
+export default function Button({ children, changeCurrent, width = "auto" }) {
 	return (
 		<motion.button
 			whileHover={{ scale: 1.05 }}
@@ -13,7 +13,3 @@ export default function Button({ children, changeCurrent, width }) {
 		</motion.button>
 	);
 }
-
-Button.defaultProps = {
-	width: "auto",
-};
