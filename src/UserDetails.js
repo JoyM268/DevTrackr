@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Loading from "./Loading";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe, faUser } from "@fortawesome/free-solid-svg-icons";
 import Section from "./Section";
 import Button from "./Button";
 import { LineChart, BarChart } from "@mui/x-charts";
+import TopRepoCard from "./TopRepoCard";
 
 export default function UserDetails({ username, back }) {
 	const [userInfo, setUserInfo] = useState(null);
@@ -13,7 +14,7 @@ export default function UserDetails({ username, back }) {
 	const [popup, setPopup] = useState(null);
 
 	function changePopup(option) {
-		if (popup === option || option === "close") {
+		if (popup === option) {
 			setPopup(null);
 		} else {
 			setPopup(option);
@@ -143,18 +144,23 @@ export default function UserDetails({ username, back }) {
 					</div>
 					<div className="text-[#eeeeee] flex justify-around flex-wrap gap-5 p-10 m-5 rounded-3xl w-auto bg-[#070F2B] border border-[#b5d5ff] border-solid items-center">
 						<Button width={"200px"} changeCurrent={changePopup}>
-							Unfollowed Followers
-						</Button>
-						<Button width={"200px"} changeCurrent={changePopup}>
-							Non-Mutual Followings
-						</Button>
-						<Button width={"200px"} changeCurrent={changePopup}>
 							Organizations
 						</Button>
 						<Button width={"200px"} changeCurrent={changePopup}>
 							Languages
 						</Button>
+						<Button width={"200px"} changeCurrent={changePopup}>
+							Download Repositories
+						</Button>
+						<Button width={"200px"} changeCurrent={changePopup}>
+							Non-Mutual Followings
+						</Button>
 					</div>
+					{popup && (
+						<Popup title={popup} onClose={() => setPopup(null)}>
+							<DownloadRepositories username={username} />
+						</Popup>
+					)}
 					<CommitGraph />
 					<div className="select-none mb-4">
 						<Section username={username} />
@@ -164,8 +170,6 @@ export default function UserDetails({ username, back }) {
 		</div>
 	);
 }
-
-function OtherFeatures() {}
 
 function CommitGraph() {
 	const [type, setType] = useState("Line");
@@ -304,6 +308,87 @@ function CommitGraph() {
 					)}
 				</div>
 			</div>
+		</div>
+	);
+}
+
+function Popup({ title, onClose, children }) {
+	return (
+		<div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+			<div className="bg-[#070F2B] rounded-xl w-[90%] max-w-xl text-white border border-[#b5d5ff] h-[80vh] overflow-y-scroll custom-scrollbar relative">
+				<div className="sticky top-0 z-[100] bg-[#070F2B] p-4 border-b border-[#b5d5ff] flex justify-between items-center">
+					<h2 className="text-2xl font-bold">{title}</h2>
+					<button
+						onClick={onClose}
+						className="text-[#b5d5ff] hover:underline focus:outline-none"
+					>
+						Close
+					</button>
+				</div>
+				<div className="mt-4 px-6">
+					The Feature is Under Development.
+				</div>
+			</div>
+		</div>
+	);
+}
+
+function DownloadRepositories({ username }) {
+	const [page, setPage] = useState(1);
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(null);
+	const [content, setContent] = useState([]);
+
+	useEffect(() => {
+		async function getData() {
+			try {
+				setLoading(true);
+				let res = await fetch(
+					`https://api.github.com/users/${username}/repos?per_page=100&page=${page}`
+				);
+
+				let data = await res.json();
+				if (res.status === 403) {
+					throw new Error(
+						"Github API Rate Limit Exceeded, Try Again Later"
+					);
+				} else if (!res.ok) {
+					throw new Error("An Error Occurred");
+				}
+
+				setContent((content) => [...content, ...data]);
+			} catch (err) {
+				setError(err.message);
+			} finally {
+				setLoading(false);
+			}
+		}
+		getData();
+	}, [page, username]);
+
+	return (
+		<div>
+			<div className="w-full flex justify-center items-center h-full">
+				{loading && <Loading />}
+				{error && <div className="error">{error}</div>}
+			</div>
+
+			{!loading && !error && (
+				<>
+					<div>
+						{content?.map((repo, idx) => (
+							<TopRepoCard
+								repoInfo={repo}
+								key={repo.id}
+								num={idx + 1}
+							/>
+						))}
+					</div>
+					<button onClick={() => setPage((prev) => prev + 1)}>
+						Show More
+					</button>
+				</>
+			)}
 		</div>
 	);
 }
